@@ -1,4 +1,4 @@
-#AEDSNN:An alternating edge-preserving diffusion and smoothing neural network for limited-angle computed tomography reconstruction
+# AEDSNN:An alternating edge-preserving diffusion and smoothing neural network for limited-angle computed tomography reconstruction
 ## Motivations 
 The goal of this repository is to enable the reproduction of the experiments described in
  an alternating edge-preserving diffusion and smoothing neural network for limited-angle 
