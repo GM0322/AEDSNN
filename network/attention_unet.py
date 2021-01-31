@@ -135,7 +135,7 @@ class aedsnn(torch.nn.Module):
     def forward(self,input,proj):
         for i in range(self.block):
             out = self.sart(input,proj)
-            input = self.layer[i](out)
-            # input = torch.cat((input,out),dim=1)
-            # input = self.relu(self.conv(input))
+            out = self.layer[i](out)
+#             input = torch.cat((input,out),dim=1)
+#             input = self.relu(self.conv(input))
         return input
