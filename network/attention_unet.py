@@ -124,12 +124,12 @@ class aedsnn(torch.nn.Module):
     def __init__(self,k1,k2,block=3):
         super(aedsnn, self).__init__()
         self.sart = SARTlayer()
-        self.layer = torch.nn.ModuleList([attention_unet(1,1,k1=k1,k2=k2).cuda() for i in range(block)])
+        self.layers = torch.nn.ModuleList([attention_unet(1,1,k1=k1,k2=k2).cuda() for i in range(block)])
         self.conv = torch.nn.Conv2d(2,1,kernel_size=1,bias=False)
         self.relu = torch.nn.ReLU()
         
     def forward(self,input,proj):
-        for step, layer in enumerate(self.layer):
+        for step, layer in enumerate(self.layers):
             out = self.sart(input,proj)
             input = layer(out)
             input = torch.cat((input,out),dim=1)
