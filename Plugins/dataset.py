@@ -3,7 +3,7 @@ import torch.utils.data as data
 import numpy as np
 import os
 
-__all__ = ['aeds_loader','fbpconvnet_loader']
+__all__ = ['aeds_loader','image_loader']
 
 class aeds_data(data.Dataset):
     def __init__(self,input_path, label_path,nViews,nBins,image_size):
