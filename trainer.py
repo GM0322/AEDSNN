@@ -17,7 +17,7 @@ def train():
     logs = Logger(r'./logger/aedsnn'+args.is_noise+'_'+str(args.k1)+'_'+str(args.k2)+'.txt')
 
     loss = torch.nn.MSELoss()
-    opt = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()),lr=args.lr)
+    opt = torch.optim.SGD(filter(lambda p: p.requires_grad, model.parameters()),lr=args.lr)
     # scheduer = lr_scheduler.MultiStepLR(opt,[i*args.epoch//5 for i in range(5)], gamma=0.5)
     scheduer = lr_scheduler.StepLR(opt,gamma=0.5,step_size=args.epoch//5)
     for epoch in range(args.epoch):
@@ -31,8 +31,8 @@ def train():
             if (step%10) == 0:
                 psnr_ = PSNR(out.detach(), y.cuda()).cpu()
                 logs.append('epoch:{},step:{},loss:{},psnr:{}'.format(epoch,step,loss_value,psnr_))
-                out.data.cpu().numpy().tofile('./temp_res/' + args.model + '_res.raw')
-                y.data.cpu().numpy().tofile('./temp_res/' + args.model + '_lab.raw')
+                out.data.cpu().numpy().tofile('./temp_res/res.raw')
+                y.data.cpu().numpy().tofile('./temp_res/lab.raw')
         scheduer.step()
 
 if __name__ == "__main__":
