@@ -27,7 +27,7 @@ def pre_train():
     else:
         raise NotImplementedError
 
-    loss = torch.nn.L1Smoothing()
+    loss = torch.nn.SmoothL1Loss()
     opt = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()),lr=args.lr)
     # scheduer = lr_scheduler.MultiStepLR(opt,[i*args.epoch//5 for i in range(5)], gamma=0.5)
     scheduer = lr_scheduler.StepLR(opt,gamma=0.5,step_size=args.epoch//5)
