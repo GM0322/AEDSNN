@@ -13,10 +13,10 @@ def pre_train():
 
     train_loader = dataset.image_loader(args.input_path,sp['nWidth'],
                                              batch_size=args.batch_size,shuffle=True)
-    test_loader = dataset.image_loader(args.test_path,image_size=sp['nWidth'],
-                                            batch_size=1,shuffle=False)
-    val_loader = dataset.image_loader(args.input_path,sp['nWidth'],
-                                             batch_size=1,shuffle=False)
+    # test_loader = dataset.image_loader(args.test_path,image_size=sp['nWidth'],
+    #                                        batch_size=1,shuffle=False)
+    # val_loader = dataset.image_loader(args.input_path,sp['nWidth'],
+    #                                         batch_size=1,shuffle=False)
 
     if args.model == 'unet':
         model = unet(1,1).cuda()
@@ -27,7 +27,7 @@ def pre_train():
     else:
         raise NotImplementedError
 
-    loss = torch.nn.MSELoss()
+    loss = torch.nn.L1Smoothing()
     opt = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()),lr=args.lr)
     # scheduer = lr_scheduler.MultiStepLR(opt,[i*args.epoch//5 for i in range(5)], gamma=0.5)
     scheduer = lr_scheduler.StepLR(opt,gamma=0.5,step_size=args.epoch//5)
