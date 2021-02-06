@@ -70,13 +70,13 @@ class attention_unet(torch.nn.Module):
         self.attention4 = attention(8)
 
         self.conv1 = block(in_ch, 64, k=k1, is_norm=True, is_x_dir=True)
-        self.pool1 = torch.nn.MaxPool2d(2)
+        self.pool1 = torch.nn.AvgPool2d(2)
         self.conv2 = block(64, 128, k=k1, is_norm=True, is_x_dir=True)
-        self.pool2 = torch.nn.MaxPool2d(2)
+        self.pool2 = torch.nn.AvgPool2d(2)
         self.conv3 = block(128, 256, k=k1, is_norm=True, is_x_dir=True)
-        self.pool3 = torch.nn.MaxPool2d(2)
+        self.pool3 = torch.nn.AvgPool2d(2)
         self.conv4 = block(256, 512, k=k1, is_norm=True, is_x_dir=True)
-        self.pool4 = torch.nn.MaxPool2d(2)
+        self.pool4 = torch.nn.AvgPool2d(2)
         self.conv5 = block(512, 1024, k=k1, is_norm=True, is_x_dir=True)
 
         self.up6 = torch.nn.ConvTranspose2d(1024, 512, 2, stride=2)
