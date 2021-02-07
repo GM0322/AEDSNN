@@ -68,8 +68,9 @@ class attention_unet(torch.nn.Module):
         self.attention2 = attention(2)
         self.attention3 = attention(4)
         self.attention4 = attention(8)
-
-        self.conv1 = block(in_ch, 64, k=k1, is_norm=True, is_x_dir=True)
+        
+        self.conv0 = torch.nn.Conv2d(in_ch,64,kernel_size=(1, k1), stride=1, padding=(0, k1 // 2))
+        self.conv1 = block(64, 64, k=k1, is_norm=True, is_x_dir=True)
         self.pool1 = torch.nn.AvgPool2d(2)
         self.conv2 = block(64, 128, k=k1, is_norm=True, is_x_dir=True)
         self.pool2 = torch.nn.AvgPool2d(2)
@@ -91,7 +92,8 @@ class attention_unet(torch.nn.Module):
         self.relu = torch.nn.ReLU()
 
     def forward(self, x):
-        c1 = self.conv1(x)
+        c0 = self.relu(self.conv0(x))
+        c1 = self.conv1(c0)
         p1 = self.pool1(c1)
         c2 = self.conv2(p1)
         p2 = self.pool2(c2)
@@ -131,7 +133,7 @@ class aedsnn(torch.nn.Module):
     def forward(self,input,proj):
         for step, layer in enumerate(self.layers):
             out = self.sart(input,proj)
-            input = self.layer(out)
+            input = layer(out)
             input = torch.cat((input,out),dim=1)
             input = self.relu(self.conv(input))
         return input
