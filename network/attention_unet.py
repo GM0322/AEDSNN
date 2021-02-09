@@ -121,8 +121,8 @@ class attention_unet(torch.nn.Module):
         c9 = self.conv9(merge9)
         c10 = self.conv10(c9)
         out = self.relu(c10)
-        # out = torch.cat((x, out), dim=1)
-        # out = self.relu(self.conv(out))
+        out = torch.cat((x, out), dim=1)
+        out = self.relu(self.conv(out))
         return out
 
 class aedsnn(torch.nn.Module):
