@@ -173,8 +173,8 @@ __global__ void AssignResidualError_kernel(float* d_fImageData,
 		float fTempR = (w - float(nWidth/2.0f) - 0.5f)*(w - float(nWidth)/2.0f - 0.5f) + (h - float(nHeight)/2.0f - 0.5f)*(h - float(nHeight)/2.0f - 0.5f);
 		fTempR = sqrt(fTempR);
 		//将负值和视野半径之外的值设为零
-		if ((d_fImageData[h*nWidth +w]<0.0f) || fTempR > float(nWidth/2.0f))
-			d_fImageData[h*nWidth+w] = 0.0f;
+		//if ((d_fImageData[h*nWidth +w]<0.0f) || fTempR > float(nWidth/2.0f))
+			//d_fImageData[h*nWidth+w] = 0.0f;
 	}
 	__syncthreads();
 }
