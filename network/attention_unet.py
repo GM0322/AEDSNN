@@ -90,6 +90,7 @@ class attention_unet(torch.nn.Module):
         self.conv9 = block(128, 64, k=k2, is_norm=False, is_x_dir=False)
         self.conv10 = torch.nn.Conv2d(64, out_ch, 1)
         self.relu = torch.nn.ReLU()
+        
         self.conv = torch.nn.Conv2d(2, 1, kernel_size=1, bias=False)
 
     def forward(self, x):
