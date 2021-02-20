@@ -252,7 +252,7 @@ def SART2DBackWard(grad,order,sp):
     texDesc1D = TextureDescriptor(address_mode1D, runtime.cudaFilterModePoint, runtime.cudaReadModeElementType)
     d_fOneProj = cupy.zeros(sp['nBins'],cupy.float32)
     for v in range(sp['nViews']):
-        nView = order[v]
+        nView = order[sp['nViews'] - 1 - v]
         fLambda = sp['fRotateDir'] * 2.0 * np.pi / float(sp['nNumAngle']) * float(nView + sp['nStartAngle'])
         fCosLambda = np.cos(fLambda)
         fSinLambda = np.sin(fLambda)
